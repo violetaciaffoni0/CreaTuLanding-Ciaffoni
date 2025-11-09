@@ -1,25 +1,25 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import CartWidget from "./CartWidget";
 
 function NavBar() {
   return (
-    <nav className="NavBar">
-      <h1 className="Logo"> Malvi-Accesorios</h1>
+    <nav className="navbar">
+      <h1 className="logo">Malvi-Accesorios</h1>
       <ul className="nav-links">
         <li>
-          <a href="#">Fundas</a>
+          <Link to="/">Inicio</Link>
         </li>
         <li>
-          <a href="#">Celulares</a>
+          <Link to="/category/fundas">Fundas</Link>
         </li>
         <li>
-          <a href="#">Cargadores</a>
+          <Link to="/category/celulares">Celulares</Link>
         </li>
         <li>
-          <a href="#">Auriculares</a>
+          <Link to="/category/auriculares">Auriculares</Link>
         </li>
         <li>
-          <a href="#">Parlantes</a>
+          <Link to="/category/parlantes">Parlantes</Link>
         </li>
       </ul>
       <CartWidget />
