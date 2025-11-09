@@ -48,8 +48,7 @@ const products = [
 
 function ItemDetailContainer() {
   const [producto, setProducto] = useState(null);
-  const { itemId } = useParams(); // 👀 ID del producto desde la URL
-
+  const { itemId } = useParams();
   useEffect(() => {
     const obtenerProducto = new Promise((resolve) => {
       setTimeout(() => {

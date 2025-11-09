@@ -7,7 +7,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-// 🛍️ Lista simulada de productos
 const products = [
   {
     id: 1,
@@ -53,10 +52,9 @@ const products = [
 
 function ItemListContainer({ mensaje }) {
   const [items, setItems] = useState([]);
-  const { categoryId } = useParams(); // 🔍 para leer la categoría de la URL
+  const { categoryId } = useParams();
 
   useEffect(() => {
-    // Simula una promesa con retardo
     const obtenerProductos = new Promise((resolve) => {
       setTimeout(() => {
         if (categoryId) {
@@ -68,7 +66,7 @@ function ItemListContainer({ mensaje }) {
     });
 
     obtenerProductos.then((data) => setItems(data));
-  }, [categoryId]); // ⚠️ dependencia importante para recargar al cambiar de categoría
+  }, [categoryId]);
 
   return (
     <Container>
@@ -88,7 +86,6 @@ function ItemListContainer({ mensaje }) {
                   <strong>${item.precio}</strong>
                 </p>
 
-                {/* 🔗 Link al detalle del producto */}
                 <Link to={`/item/${item.id}`}>
                   <Button variant="primary">Ver más</Button>
                 </Link>
