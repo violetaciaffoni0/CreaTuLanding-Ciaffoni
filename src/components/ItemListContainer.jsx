@@ -68,17 +68,7 @@ function ItemListContainer({ mensaje }) {
 
     obtenerProductos.then((data) => setItems(data));
   }, [categoryId]);
-
   return <ItemList items={items} />;
 }
 
 export default ItemListContainer;
-
-/*function ItemListContainer({ mensaje }) {
-  return (
-    <div className="Item-List-Container">
-      <h2> {mensaje}</h2>
-      <p>Descubri nuestras Fundas, Celulares y Accesorios </p>
-    </div>
-  );
-  }*/
