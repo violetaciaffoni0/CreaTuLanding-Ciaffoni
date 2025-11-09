@@ -1,75 +1,97 @@
+// components/ItemListContainer.jsx
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Podés dejarlo si después lo vas a usar
+import { useParams, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+// 🛍️ Lista simulada de productos
 const products = [
   {
     id: 1,
-    nombre: "Funda para iPhone 17 Pro Max",
+    nombre: "Funda iPhone 17 Pro Max",
     precio: 10000,
+    categoria: "fundas",
     imagen: "https://via.placeholder.com/150",
     descripcion: "Color: morado, azul",
   },
   {
     id: 2,
-    nombre: "Funda para iPhone 13",
+    nombre: "Funda iPhone 13",
     precio: 9000,
+    categoria: "fundas",
     imagen: "https://via.placeholder.com/150",
     descripcion: "Varios colores",
   },
   {
     id: 3,
-    nombre: "Funda para Samsung A10",
-    precio: 8000,
+    nombre: "Celular Samsung A10",
+    precio: 80000,
+    categoria: "celulares",
     imagen: "https://via.placeholder.com/150",
-    descripcion: "De varios colores",
+    descripcion: "Pantalla 6.2 pulgadas",
   },
   {
     id: 4,
-    nombre: "Funda para Samsung S55",
-    precio: 8000,
+    nombre: "Auriculares Bluetooth",
+    precio: 12000,
+    categoria: "auriculares",
     imagen: "https://via.placeholder.com/150",
-    descripcion: "Transparente",
+    descripcion: "Sonido HD",
+  },
+  {
+    id: 5,
+    nombre: "Parlante JBL",
+    precio: 15000,
+    categoria: "parlantes",
+    imagen: "https://via.placeholder.com/150",
+    descripcion: "Batería 10 horas",
   },
 ];
 
-function ItemListContainer() {
-  const [Litems, setItems] = useState([]);
-
-  const obtenerProductos = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(products);
-      }, 1000);
-    });
-  };
+function ItemListContainer({ mensaje }) {
+  const [items, setItems] = useState([]);
+  const { categoryId } = useParams(); // 🔍 para leer la categoría de la URL
 
   useEffect(() => {
-    obtenerProductos().then((data) => setItems(data));
-  }, []);
+    // Simula una promesa con retardo
+    const obtenerProductos = new Promise((resolve) => {
+      setTimeout(() => {
+        if (categoryId) {
+          resolve(products.filter((prod) => prod.categoria === categoryId));
+        } else {
+          resolve(products);
+        }
+      }, 1000);
+    });
+
+    obtenerProductos.then((data) => setItems(data));
+  }, [categoryId]); // ⚠️ dependencia importante para recargar al cambiar de categoría
 
   return (
     <Container>
-      <Row
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "20px",
-          justifyContent: "center",
-        }}
-      >
-        {Litems.map((item) => (
+      {mensaje && (
+        <h2 style={{ textAlign: "center", margin: "20px" }}>{mensaje}</h2>
+      )}
+
+      <Row style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+        {items.map((item) => (
           <Col key={item.id} xs={12} sm={6} md={4} lg={3}>
             <Card>
               <Card.Img variant="top" src={item.imagen} />
               <Card.Body>
                 <Card.Title>{item.nombre}</Card.Title>
                 <Card.Text>{item.descripcion}</Card.Text>
-                <Button variant="primary">Ver más</Button>
+                <p>
+                  <strong>${item.precio}</strong>
+                </p>
+
+                {/* 🔗 Link al detalle del producto */}
+                <Link to={`/item/${item.id}`}>
+                  <Button variant="primary">Ver más</Button>
+                </Link>
               </Card.Body>
             </Card>
           </Col>
