@@ -1,11 +1,11 @@
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function ItemList(items) {
+function ItemList({ items, mensaje }) {
   return (
     <Container>
       {mensaje && (
@@ -23,7 +23,6 @@ function ItemList(items) {
                 <p>
                   <strong>${item.precio}</strong>
                 </p>
-
                 <Link to={`/item/${item.id}`}>
                   <Button variant="primary">Ver más</Button>
                 </Link>
@@ -35,4 +34,5 @@ function ItemList(items) {
     </Container>
   );
 }
+
 export default ItemList;
