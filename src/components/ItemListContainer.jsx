@@ -1,30 +1,70 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
+import funda1 from "../assets/funda1.jpg";
+import funda2 from "../assets/funda2.jpg";
+import funda3 from "../assets/funda3.jpeg";
+import funda4 from "../assets/funda4.jpeg";
+
+const products = [
+  {
+    id: 1,
+    nombre: "Funda iPhone 16 Pro Max",
+    precio: 10000,
+    categoria: "fundas",
+    imagen: funda1,
+    descripcion: "Color morado con brillo",
+  },
+  {
+    id: 2,
+    nombre: "Funda iPhone 13",
+    precio: 9000,
+    categoria: "fundas",
+    imagen: funda2,
+    descripcion: "Color azul cielo",
+  },
+  {
+    id: 3,
+    nombre: "bateria portatil",
+    precio: 33000,
+    categoria: "cargadores",
+    imagen: funda3,
+    descripcion: "Carga super rápida",
+  },
+  {
+    id: 4,
+    nombre: "Auriculares",
+    precio: 40000,
+    categoria: "auriculares",
+    imagen: funda4,
+    descripcion: "Con cancelación de ruido",
+  },
+];
 
 function ItemListContainer({ mensaje }) {
+  const { categoriaId } = useParams();
   const [items, setItems] = useState([]);
-  const { categoryId } = useParams();
 
   useEffect(() => {
-    // Construimos la URL según si hay categoryId o no
-    const url = categoryId
-      ? `https://dummyjson.com/products/category/${categoryId}`
-      : "https://dummyjson.com/products";
+    const getProducts = new Promise((resolve) => {
+      setTimeout(() => {
+        if (categoriaId) {
+          resolve(products.filter((prod) => prod.categoria === categoriaId));
+        } else {
+          resolve(products);
+        }
+      }, 1000);
+    });
 
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        // Algunos endpoints devuelven "products" y otros devuelven directamente el array
-        setItems(data.products || data);
-      })
-      .catch((error) => console.error("Error al traer los productos:", error));
-  }, [categoryId]);
+    getProducts.then((res) => setItems(res));
+  }, [categoriaId]);
 
-  return <ItemList items={items} mensaje={mensaje} />;
+  return (
+    <div className="container">
+      {mensaje && <h2 className="titulo">{mensaje}</h2>}
+      <ItemList items={items} />
+    </div>
+  );
 }
 
 export default ItemListContainer;

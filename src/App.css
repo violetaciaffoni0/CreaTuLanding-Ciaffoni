@@ -1,202 +1,66 @@
-/* === GENERAL === */
-•⁠ ⁠ {
+body {
+  font-family: "Raleway", sans-serif;
+  background-color: #fff;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-body {
-  background-color: rgba(245, 245, 220, 0.766);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: rgba(0, 0, 0, 0.492);
-}
-
-/* === CONTENEDOR RAÍZ === */
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* === NAVBAR === */
-.NavBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(245, 245, 220, 0.632);
-  color: rgba(0, 0, 0, 0.659);
+.navbar {
   display: flex;
-  font-size: 10px;
-  align-items: center;
-  font-family: "Times New Roman", Times, serif;
   justify-content: space-between;
-  padding: 10px 10px;
-  box-shadow: 0 2px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  background-color: #ffb6c1;
+  padding: 10px 20px;
+  align-items: center;
 }
 
-/* === LOGO === */
 .logo {
-  font-size: 5;
   font-weight: bold;
-  color: black;
-  letter-spacing: 1px;
+  color: white;
+  text-decoration: none;
+  font-size: 22px;
 }
 
-/* === ENLACES === */
 .nav-links {
-  list-style: none;
   display: flex;
-  gap: 25px;
-}
-
-.nav-links li {
-  display: inline;
+  list-style: none;
+  gap: 15px;
 }
 
 .nav-links a {
-  color: rgba(0, 0, 0, 0.671);
-  font-size: 1rem;
+  color: white;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s;
 }
 
-.nav-links a:hover {
-  color: black;
-}
-
-/* === CARRITO === */
 .cart-widget {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 20px;
-  font-size: 2.5rem;
-}
-
-.cart-icon {
-  font-size: 2.5rem;
-  color: black;
+  font-size: 22px;
+  color: white;
 }
 
 .cart-count {
-  position: absolute;
-  top: -0px;
-  right: -1px;
-  color: black;
-  font-size: 0.9rem;
-  font-weight: bold;
-  padding: 7px 7px;
-  line-height: 1;
+  background-color: white;
+  color: #ff69b4;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 14px;
+  margin-left: 4px;
 }
 
-/* === CONTENEDOR DE PRODUCTOS === */
-.item-list-container {
+.container {
+  padding: 20px;
+}
+
+.titulo {
   text-align: center;
-  margin-top: 120px;
-  background-color: #2a2a2a;
-  border-radius: 10px;
-  padding: 40px 20px;
-  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
 }
 
-.item-list-container h2 {
-  color: black;
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.item-list-container p {
-  color: black;
-  font-size: 1.1rem;
-}
-
-/* === PRODUCTOS (Entrega 2) === */
-.products-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.product-card {
-  background-color: rgba(245, 245, 220, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  padding: 15px;
+.item-detail {
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 30px;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.product-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.product-card h3 {
-  font-size: 1.2rem;
-  color: black;
-  margin-bottom: 5px;
-}
-
-.product-card p {
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.7);
-  margin-bottom: 8px;
-}
-
-.product-card .price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: black;
-  margin-bottom: 10px;
-}
-
-.product-card button {
-  background-color: #2a2a2a;
-  color: beige;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-}
-
-.product-card button:hover {
-  background-color: black;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-  .NavBar {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .products-container {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-
-  .product-card img {
-    height: 160px;
-  }
+.item-detail img {
+  width: 250px;
+  border-radius: 10px;
 }

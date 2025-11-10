@@ -6,14 +6,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Item from "./Item";
 
-function ItemList({ items, mensaje }) {
+function ItemList({ items }) {
   return (
     <Container>
-      {mensaje && (
-        <h2 style={{ textAlign: "center", margin: "20px" }}>{mensaje}</h2>
-      )}
-
-      <Row style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+      <Row>
         {items.map((item) => (
           <Item key={item.id} item={item} />
         ))}
