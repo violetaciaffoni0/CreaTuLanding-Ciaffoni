@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CartWidget from "./CartWidget";
-import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <nav className="navbar">
-      <h1 as={Link} className="logo">
-        Malvi-Accesorios
-      </h1>
+      <Link to="/" className="logo">
+        <h1>Malvi-Accesorios</h1>
+      </Link>
+
       <ul className="nav-links">
         <li>
           <Link to="/">Inicio</Link>
@@ -23,6 +23,7 @@ function NavBar() {
           <Link to="/categoria/Cargadores">Cargadores</Link>
         </li>
       </ul>
+
       <CartWidget />
     </nav>
   );
