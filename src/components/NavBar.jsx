@@ -11,17 +11,18 @@ function NavBar() {
           <Link to="/">Inicio</Link>
         </li>
         <li>
-          <Link to="/category/fundas">Fundas</Link>
+          <Link to="/categoria/Fundas">Fundas</Link>
         </li>
         <li>
-          <Link to="/category/auriculares">Auriculares</Link>
+          <Link to="/categoria/Auriculares">Auriculares</Link>
         </li>
         <li>
-          <Link to="/category/parlantes">Cargadores</Link>
+          <Link to="/categoria/Cargadores">Cargadores</Link>
         </li>
       </ul>
       <CartWidget />
     </nav>
   );
 }
+
 export default NavBar;
