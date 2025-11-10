@@ -7,10 +7,10 @@ function Item({ item }) {
   return (
     <Col xs={12} sm={6} md={4} lg={3}>
       <Card>
-        <Card.Img variant="top" src={item.imagen} />
+        <Card.Img variant="top" src={item.thumbnail} />
         <Card.Body>
-          <Card.Title>{item.nombre}</Card.Title>
-          <Card.Text>{item.descripcion}</Card.Text>
+          <Card.Title>{item.title}</Card.Title>
+          <Card.Text>{item.description}</Card.Text>
           <p>
             <strong>${item.precio}</strong>
           </p>

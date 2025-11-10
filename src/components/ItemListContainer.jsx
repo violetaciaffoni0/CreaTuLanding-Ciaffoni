@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
 
-const products = [
+/*const products = [
   {
     id: 1,
     nombre: "Funda iPhone 17 Pro Max",
@@ -43,7 +43,7 @@ const products = [
     imagen: "https://via.placeholder.com/150",
     descripcion: "Batería 10 horas",
   },
-];
+];*/
 
 function ItemListContainer({ mensaje }) {
   const [items, setItems] = useState([]);
@@ -59,8 +59,9 @@ function ItemListContainer({ mensaje }) {
         }
       }, 1000);
     });
-
-    obtenerProductos.then((data) => setItems(data));
+    fetch("https://dummyjson.com/products")
+      .then((res) => res.json())
+      .then((data) => setItems(data.products));
   }, [categoryId]);
 
   return <ItemList items={items} mensaje={mensaje} />;
