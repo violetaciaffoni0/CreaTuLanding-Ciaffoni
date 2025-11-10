@@ -5,6 +5,7 @@ import funda1 from "../assets/funda1.jpg";
 import funda2 from "../assets/funda2.jpg";
 import funda3 from "../assets/funda3.jpeg";
 import funda4 from "../assets/funda4.jpeg";
+import { withLoading } from "../hoc/withLoading";
 
 const products = [
   {
@@ -62,7 +63,7 @@ function ItemListContainer({ mensaje }) {
   return (
     <div className="container">
       {mensaje && <h2 className="titulo">{mensaje}</h2>}
-      <ItemList items={items} />
+      <ItemListWithLoading items={items} />
     </div>
   );
 }
