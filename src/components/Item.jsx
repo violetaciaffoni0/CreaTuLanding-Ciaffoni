@@ -16,7 +16,7 @@ function Item({ item }) {
             <strong>${item.precio}</strong>
           </p>
           <Link to={`/item/${item.id}`} className="btn btn-primary">
-            Ver detalle
+            Ver mas
           </Link>
         </Card.Body>
       </Card>
