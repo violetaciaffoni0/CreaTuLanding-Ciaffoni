@@ -42,6 +42,8 @@ const products = [
   },
 ];
 
+const ItemListWithLoading = withLoading(ItemList);
+
 function ItemListContainer({ mensaje }) {
   const { categoriaId } = useParams();
   const [items, setItems] = useState([]);
