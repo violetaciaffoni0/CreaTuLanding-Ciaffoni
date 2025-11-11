@@ -1,32 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import CartWidget from "./CartWidget";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import ItemListContainer from "./components/ItemListContainer";
+import ItemDetailContainer from "./components/ItemDetailContainer";
+import "./App.css";
 
-function NavBar() {
+function App() {
   return (
-    <nav className="navbar">
-      <Link to="/" className="logo">
-        <h1>Malvi-Accesorios</h1>
-      </Link>
-
-      <ul className="nav-links">
-        <li>
-          <Link to="/">Inicio</Link>
-        </li>
-        <li>
-          <Link to="/categoria/Fundas">Fundas</Link>
-        </li>
-        <li>
-          <Link to="/categoria/Auriculares">Auriculares</Link>
-        </li>
-        <li>
-          <Link to="/categoria/Cargadores">Cargadores</Link>
-        </li>
-      </ul>
-
-      <CartWidget />
-    </nav>
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ItemListContainer
+              className="mensaje-bienvenida"
+              mensaje="Bienvenidos a Malvi Accesorios"
+            />
+          }
+        />
+        <Route path="/categoria/:categoriaId" element={<ItemListContainer />} />
+        <Route path="/item/:id" element={<ItemDetailContainer />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default NavBar;
+export default App;

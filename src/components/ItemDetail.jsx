@@ -1,15 +1,36 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-
-function ItemDetail({ item }) {
+import ItemCount from "./itemCount";
+function itemDetail({ item }) {
   return (
-    <div className="item-detail">
-      <img src={item.imagen} alt={item.nombre} />
+    <div
+      className="item-detail"
+      style={{
+        textAlign: "center",
+        marginTop: "20px",
+        padding: "20px",
+        border: "1px solid #ddd",
+        borderRadius: "12px",
+        width: "fit-content",
+        marginInline: "auto",
+      }}
+    >
+      <img
+        src={item.imagen}
+        alt={item.nombre}
+        style={{
+          width: "250px",
+          height: "250px",
+          objectFit: "cover",
+          borderRadius: "12px",
+          marginBottom: "10px",
+        }}
+      />
       <h2>{item.nombre}</h2>
       <p>{item.descripcion}</p>
       <h3>${item.precio}</h3>
+      <ItemCount />
     </div>
   );
 }
 
-export default ItemDetail;
+export default itemDetail;
