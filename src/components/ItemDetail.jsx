@@ -1,6 +1,7 @@
 import React from "react";
 import ItemCount from "./itemCount";
-function itemDetail({ item }) {
+
+function ItemDetail({ item }) {
   return (
     <div
       className="item-detail"
@@ -33,4 +34,4 @@ function itemDetail({ item }) {
   );
 }
 
-export default itemDetail;
+export default ItemDetail;
