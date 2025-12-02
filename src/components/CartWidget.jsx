@@ -1,12 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 function CartWidget() {
+  const navigate = useNavigate();
+
   return (
-    <div className="cart-widget">
+    <button className="cart-widget" onClick={() => navigate("/cart")}>
       🛒
       <span className="cart-count">3</span>
-    </div>
+    </button>
   );
 }
-
 export default CartWidget;

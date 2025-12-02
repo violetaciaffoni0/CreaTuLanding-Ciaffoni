@@ -37,6 +37,13 @@ body {
 .cart-widget {
   font-size: 22px;
   color: rgba(255, 255, 255, 0.509);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
 .cart-count {
