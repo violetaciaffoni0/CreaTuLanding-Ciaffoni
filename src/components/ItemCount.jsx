@@ -14,7 +14,7 @@ function itemCount({ item }) {
       setCounter(0);
     }
   };
-  const handleAddToCart = () => addToCart(item);
+  const handleAddToCart = () => addToCart({ ...item, count: counter });
 
   return (
     <div style={{ marginTop: "15px", textAlign: "center" }}>
