@@ -29,7 +29,7 @@ function ItemDetail({ item }) {
       <h2>{item.nombre}</h2>
       <p>{item.descripcion}</p>
       <h3>${item.precio}</h3>
-      <ItemCount />
+      <ItemCount item={item} />
     </div>
   );
 }
