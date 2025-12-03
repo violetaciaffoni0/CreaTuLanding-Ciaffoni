@@ -1,30 +1,31 @@
-import { useState, useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
+import { useCart } from "../context/useCart";
 
-function itemCount({ item }) {
-  const [counter, setCounter] = useState(0);
-  const { addToCart } = useContext(CartContext);
+function ItemCount({ item }) {
+  const [counter, setCounter] = useState(1);
+  const { addToCart } = useCart();
 
   const handleAdd = () => setCounter(counter + 1);
-  const handleRes = () => counter > 0 && setCounter(counter - 1);
-  const handleReset = () => {
-    if (counter > 0) {
-      alert(`Agregaste ${counter} ${nombre} al carrito`);
-      setCounter(0);
-    }
+  const handleRes = () => counter > 1 && setCounter(counter - 1);
+
+  const handleAddToCart = () => {
+    addToCart({ ...item, count: counter });
+    alert(`Agregaste ${counter} ${item.nombre} al carrito`);
   };
-  const handleAddToCart = () => addToCart({ ...item, count: counter });
 
   return (
     <div style={{ marginTop: "15px", textAlign: "center" }}>
       <p style={{ fontSize: "18px" }}>{counter}</p>
+
       <Button onClick={handleRes} variant="danger" style={{ margin: "5px" }}>
         Restar
       </Button>
+
       <Button onClick={handleAdd} variant="success" style={{ margin: "5px" }}>
         Sumar
       </Button>
+
       <Button
         onClick={handleAddToCart}
         variant="primary"
@@ -36,4 +37,4 @@ function itemCount({ item }) {
   );
 }
 
-export default itemCount;
+export default ItemCount;

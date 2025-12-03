@@ -7,7 +7,7 @@ import { useCart } from "../context/useCart";
 function ItemDetailContainer() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
-  const { addToCart } = useCart(); // OBTENER FUNCION PARA AGREGAR AL CARRITO
+  const { addToCart } = useCart();
 
   useEffect(() => {
     getProductById(id).then((res) => setItem(res));
@@ -15,8 +15,8 @@ function ItemDetailContainer() {
 
   const handleAddToCart = () => {
     if (item) {
-      addToCart({ ...item, count: 1 }); // AGREGAMOS count = 1 POR DEFAULT
-      alert(`${item.title} agregado al carrito`); // OPCIONAL: feedback visual
+      addToCart({ ...item, count: 1 });
+      alert(`${item.nombre} agregado al carrito`);
     }
   };
 
