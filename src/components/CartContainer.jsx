@@ -1,4 +1,4 @@
-import { useCart } from "./useCart";
+import { useCart } from "..context/useCart.jsx";
 
 function CartContainer() {
   const { cart } = useCart();
