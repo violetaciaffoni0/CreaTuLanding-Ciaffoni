@@ -1,14 +1,13 @@
 import { useCart } from "./useCart";
 
 function CartContainer() {
-  const { Cart } = useCart();
+  const { cart } = useCart(); // CORREGIDO: minúscula
 
   return (
     <div>
-      {Cart.map((prod) => (
-        <p> {prod.title} </p>
+      {cart.map((prod) => (
+        <p key={prod.id}>{prod.title}</p>
       ))}
-      ))
     </div>
   );
 }

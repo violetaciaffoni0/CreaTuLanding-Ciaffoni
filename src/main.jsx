@@ -1,14 +1,13 @@
-// main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importar Bootstrap globalmente
-import CartProvaider from "./context/CartProvider.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
+import CartProvider from "./context/CartProvider.jsx"; // CORREGIDO: nombre correcto
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CartProvaider>
+    <CartProvider>
       <App />
-    </CartProvaider>
+    </CartProvider>
   </React.StrictMode>
 );
