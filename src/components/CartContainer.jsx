@@ -1,5 +1,6 @@
 import { useCart } from "../context/useCart";
 import ListGroup from "react-bootstrap/ListGroup";
+import { Button } from "react-bootstrap/Button";
 
 function CartContainer() {
   const { cart } = useCart();
@@ -10,6 +11,7 @@ function CartContainer() {
         {cart.map((prod) => (
           <ListGroup.Item key={prod.id}>
             {prod.nombre} x {prod.count}
+            <Button variant="danger">Eliminar</Button>
           </ListGroup.Item>
         ))}
       </ListGroup>
