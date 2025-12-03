@@ -12,6 +12,7 @@ function CartProvider({ children }) {
   const addToCart = (product) => {
     const exists = cart.find((p) => p.id === product.id);
 
+    const clearCart = () => setCart([]);
     if (exists) {
       setCart(
         cart.map((p) =>
@@ -24,7 +25,9 @@ function CartProvider({ children }) {
   };
 
   return (
-    <CartContext.Provider value={{ getCartQuantity, addToCart, cart }}>
+    <CartContext.Provider
+      value={{ getCartQuantity, addToCart, cart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );
