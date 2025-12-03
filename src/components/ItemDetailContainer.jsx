@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ItemDetail from "./itemDetail";
 import { getProductById } from "../data/products";
-import { useCart } from "../context/useCart"; // IMPORT DEL HOOK
+import { useCart } from "../context/useCart";
 
 function ItemDetailContainer() {
   const { id } = useParams();
