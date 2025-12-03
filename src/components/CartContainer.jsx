@@ -6,8 +6,9 @@ function CartContainer() {
   return (
     <div>
       {Cart.map((prod) => (
-        <p key={prod.id}>{prod.title}</p>
+        <p> {prod.title} </p>
       ))}
+      ))
     </div>
   );
 }
