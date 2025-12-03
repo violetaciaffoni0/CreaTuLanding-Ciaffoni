@@ -1,7 +1,7 @@
 import { useCart } from "./useCart";
 
 function CartContainer() {
-  const { cart } = useCart(); // CORREGIDO: minúscula
+  const { cart } = useCart();
 
   return (
     <div>
