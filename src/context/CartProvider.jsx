@@ -8,11 +8,13 @@ function CartProvider({ children }) {
   const getCartQuantity = () =>
     cart.reduce((acc, current) => acc + current.count, 0);
 
+  // Vaciar carrito
+  const clearCart = () => setCart([]);
+
   // Agregar al carrito (acumula cantidades si el producto ya existe)
   const addToCart = (product) => {
     const exists = cart.find((p) => p.id === product.id);
 
-    const clearCart = () => setCart([]);
     if (exists) {
       setCart(
         cart.map((p) =>
