@@ -19,7 +19,12 @@ function ItemDetailContainer() {
   if (loading) return <p>Cargando...</p>;
   if (!item) return <p>Producto no encontrado</p>;
 
-  return <ItemDetail item={item} />;
+  const handleAddToCart = (count) => {
+    console.log("Agregado al carrito:", item, "Cantidad:", count);
+    // Luego lo conectamos con tu CartContext si querés
+  };
+
+  return <ItemDetail item={item} onAddToCart={handleAddToCart} />;
 }
 
 export default ItemDetailContainer;

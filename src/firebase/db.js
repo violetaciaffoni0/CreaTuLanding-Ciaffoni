@@ -1,35 +1,35 @@
-// src/firebase/db.js
 import {
   getFirestore,
   collection,
   getDocs,
-  doc,
   getDoc,
+  doc,
+  query,
+  where,
 } from "firebase/firestore";
-import { app } from "./config.js"; // ajusta la ruta si tu config.js está en otro lugar
+import { app } from "./config.js";
 
 const db = getFirestore(app);
 
-// Traer todos los items
 export const getItems = async () => {
-  const itemsCol = collection(db, "items");
-  const itemsSnapshot = await getDocs(itemsCol);
-  return itemsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const querySnapshot = await getDocs(collection(db, "items"));
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
-// Traer item por id
 export const getItemById = async (id) => {
-  const docRef = doc(db, "items", id);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() };
-  } else {
+  const docSnap = await getDoc(doc(db, "items", id));
+  if (!docSnap.exists())
     throw new Error("No se encontró el item con id: " + id);
-  }
+  return { id: docSnap.id, ...docSnap.data() };
 };
 
-// Traer items por categoría
-export const getItemsByCategory = async (categoryId) => {
-  const items = await getItems();
-  return items.filter((item) => item.category === categoryId); // el campo es 'category' como en Firebase
+export const getItemsByCategory = async (category) => {
+  const q = query(collection(db, "items"), where("category", "==", category));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const getCategories = async () => {
+  const querySnapshot = await getDocs(collection(db, "categories"));
+  return querySnapshot.docs.map((doc) => doc.data().name);
 };

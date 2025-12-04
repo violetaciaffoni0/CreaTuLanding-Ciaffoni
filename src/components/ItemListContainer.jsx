@@ -19,10 +19,7 @@ function ItemListContainer({ mensaje }) {
       : getItems();
 
     fetchItems
-      .then((prods) => {
-        console.log("Productos cargados:", prods); // depuración
-        setItems(prods);
-      })
+      .then((prods) => setItems(prods))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, [categoriaId]);

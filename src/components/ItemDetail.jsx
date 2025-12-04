@@ -10,15 +10,23 @@ function ItemDetail({ item, onAddToCart }) {
   };
 
   return (
-    <div className="item-detail">
-      <img src={item.imagen} alt={item.nombre} />
+    <div style={{ textAlign: "center", marginTop: "40px" }}>
+      <img
+        src={item.imagen}
+        alt={item.nombre}
+        style={{ width: "260px", borderRadius: "12px", marginBottom: "20px" }}
+      />
+
       <h2>{item.nombre}</h2>
       <p>{item.descripcion}</p>
-      <h3>${item.precio}</h3>
+      <h3 style={{ marginBottom: "25px" }}>${item.precio}</h3>
+
       {!added ? (
         <ItemCount item={item} onAdd={handleAdd} />
       ) : (
-        <p>Producto agregado al carrito</p>
+        <h4 style={{ color: "green", fontWeight: "bold" }}>
+          Producto agregado al carrito ✔
+        </h4>
       )}
     </div>
   );
