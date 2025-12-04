@@ -1,11 +1,28 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useCart } from "../context/CartProvider.jsx";
+import { createOrder } from "../firebase/db";
+import { serverTimestamp } from "firebase/firestore";
 
 function Checkout() {
+  const { cart, getTotal } = useCart();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formulario enviado:");
-    console.log(e.target);
+
+    const form = e.target;
+    const email = form.email.value;
+    const name = form.name.value;
+    const phone = form.phone.value;
+
+    const order = {
+      buyer: { email, name, phone },
+      items: cart,
+      total: getTotal(),
+      date: serverTimestamp(),
+    };
+
+    createOrder(order);
   };
 
   return (

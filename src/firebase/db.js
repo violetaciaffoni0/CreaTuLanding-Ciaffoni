@@ -6,6 +6,7 @@ import {
   doc,
   query,
   where,
+  addDoc,
 } from "firebase/firestore";
 import { app } from "./config.js";
 
@@ -38,7 +39,6 @@ export const getCategories = async () => {
   return querySnapshot.docs.map((doc) => doc.data().name);
 };
 
-// Solo para debug (NO se usa en React)
 export const getItem = async (id) => {
   const docRef = doc(db, "items", id);
   const docSnap = await getDoc(docRef);
@@ -47,5 +47,16 @@ export const getItem = async (id) => {
     console.log("Document data:", docSnap.data());
   } else {
     console.log("No such document!");
+  }
+};
+
+export const createOrder = async (order) => {
+  try {
+    const docRef = await addDoc(collection(db, "order"), order);
+
+    console.log("Document written with ID:", docRef.id);
+    return docRef.id;
+  } catch (e) {
+    console.error("Error adding document:", e);
   }
 };
