@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ItemList from "./ItemList";
-import { withLoading } from "../hoc/withLoading";
-import { getItems } from "../firebase/db";
+import ItemList from "./ItemList.jsx";
+import { withLoading } from "../hoc/withLoading.jsx";
+import { getItems } from "../firebase/db.js";
 
 const ItemListWithLoading = withLoading(ItemList);
 
@@ -14,8 +14,8 @@ function ItemListContainer({ mensaje }) {
   useEffect(() => {
     setLoading(true);
     getItems(categoriaId)
-      .then((res) => setItems(res))
-      .catch((err) => console.error(err))
+      .then(setItems)
+      .catch(console.error)
       .finally(() => setLoading(false));
   }, [categoriaId]);
 

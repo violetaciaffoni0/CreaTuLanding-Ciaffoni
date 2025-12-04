@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import ItemCount from "./ItemCount";
+import { useState } from "react";
+import ItemCount from "./ItemCount.jsx";
 
 function ItemDetail({ item, onAddToCart }) {
   const [added, setAdded] = useState(false);
@@ -15,8 +15,11 @@ function ItemDetail({ item, onAddToCart }) {
       <h2>{item.nombre}</h2>
       <p>{item.descripcion}</p>
       <h3>${item.precio}</h3>
-      {!added && <ItemCount item={item} onAdd={handleAdd} />}
-      {added && <p>Producto agregado al carrito</p>}
+      {!added ? (
+        <ItemCount item={item} onAdd={handleAdd} />
+      ) : (
+        <p>Producto agregado al carrito</p>
+      )}
     </div>
   );
 }

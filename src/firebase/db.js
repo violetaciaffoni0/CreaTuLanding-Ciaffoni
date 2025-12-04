@@ -5,7 +5,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { app } from "./config";
+import { app } from "./config.js";
 
 const db = getFirestore(app);
 
@@ -16,13 +16,9 @@ export const getItems = async (categoriaId = null) => {
       ? query(itemsRef, where("categoria", "==", categoriaId))
       : itemsRef;
     const snapshot = await getDocs(q);
-
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
-    console.error("Error cargando productos de Firebase:", error);
+    console.error("Error obteniendo items:", error);
     return [];
   }
 };
@@ -32,14 +28,11 @@ export const getItemById = async (id) => {
     const itemsRef = collection(db, "items");
     const q = query(itemsRef, where("__name__", "==", id));
     const snapshot = await getDocs(q);
-
-    if (!snapshot.empty) {
+    if (!snapshot.empty)
       return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
-    }
-
     return null;
   } catch (error) {
-    console.error("Error obteniendo producto por ID:", error);
+    console.error("Error obteniendo item por ID:", error);
     return null;
   }
 };

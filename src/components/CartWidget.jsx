@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router";
-import { useCart } from "../context/useCart";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartProvider.jsx";
 
 function CartWidget() {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "./ItemDetail";
-import { getItemById } from "../firebase/db";
-import { useCart } from "../context/useCart";
+import ItemDetail from "./ItemDetail.jsx";
+import { getItemById } from "../firebase/db.js";
+import { useCart } from "../context/CartProvider.jsx";
 
 function ItemDetailContainer() {
   const { id } = useParams();
@@ -13,8 +13,8 @@ function ItemDetailContainer() {
   useEffect(() => {
     setLoading(true);
     getItemById(id)
-      .then((res) => setItem(res))
-      .catch((err) => console.error(err))
+      .then(setItem)
+      .catch(console.error)
       .finally(() => setLoading(false));
   }, [id]);
 
