@@ -10,7 +10,7 @@ function CartContainer() {
   if (cart.length < 1) return <EmptyCart />;
 
   const totalPrice = cart.reduce(
-    (acc, item) => acc + item.precio * item.count,
+    (acc, item) => acc + item.precio * item.quantity,
     0
   );
 
@@ -24,14 +24,14 @@ function CartContainer() {
           >
             <div className="d-flex align-items-center gap-3">
               <Image
-                src={prod.imagen}
+                src={prod.image}
                 width={50}
                 height={50}
                 rounded
                 style={{ objectFit: "cover" }}
               />
               <span>
-                {prod.nombre} x {prod.count}
+                {prod.name} x {prod.quantity}
               </span>
             </div>
 

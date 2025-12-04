@@ -4,23 +4,29 @@ import ItemListContainer from "./components/ItemListContainer.jsx";
 import ItemDetailContainer from "./components/ItemDetailContainer.jsx";
 import CartContainer from "./components/CartContainer.jsx";
 import "./App.css";
+import { CartProvider } from "./context/CartContext.jsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <NavBar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ItemListContainer mensaje="Bienvenidos a Malvi Accesorios" />
-          }
-        />
-        <Route path="/categoria/:categoriaId" element={<ItemListContainer />} />
-        <Route path="/item/:id" element={<ItemDetailContainer />} />
-        <Route path="/cart" element={<CartContainer />} />
-      </Routes>
-    </BrowserRouter>
+    <CartProvider>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ItemListContainer mensaje="Bienvenidos a Malvi Accesorios" />
+            }
+          />
+          <Route
+            path="/categoria/:categoriaId"
+            element={<ItemListContainer />}
+          />
+          <Route path="/item/:id" element={<ItemDetailContainer />} />
+          <Route path="/cart" element={<CartContainer />} />
+        </Routes>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 

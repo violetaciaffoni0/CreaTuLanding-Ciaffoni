@@ -1,11 +1,14 @@
 import { useState } from "react";
 import ItemCount from "./ItemCount.jsx";
+import { useCart } from "../context/CartProvider.jsx";
 
-function ItemDetail({ item, onAddToCart }) {
+function ItemDetail({ item }) {
   const [added, setAdded] = useState(false);
 
-  const handleAdd = (count) => {
-    onAddToCart(count);
+  const { addItem } = useCart();
+
+  const handleAdd = (cantidad) => {
+    addItem(item, cantidad);
     setAdded(true);
   };
 
