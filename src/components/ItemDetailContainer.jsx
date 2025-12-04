@@ -10,6 +10,7 @@ function ItemDetailContainer() {
 
   useEffect(() => {
     setLoading(true);
+
     getItemById(id)
       .then((prod) => setItem(prod))
       .catch((err) => console.error(err))
@@ -21,7 +22,6 @@ function ItemDetailContainer() {
 
   const handleAddToCart = (count) => {
     console.log("Agregado al carrito:", item, "Cantidad:", count);
-    // Luego lo conectamos con tu CartContext si querés
   };
 
   return <ItemDetail item={item} onAddToCart={handleAddToCart} />;

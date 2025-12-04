@@ -1,46 +1,39 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
-function ItemCount({ stock = 5, initial = 1, onAdd }) {
-  const [count, setCount] = useState(initial);
+function ItemCount({ stock = 10, onAdd }) {
+  const [cantidad, setCantidad] = useState(1);
 
   const sumar = () => {
-    if (count < stock) {
-      setCount(count + 1);
-    }
+    if (cantidad < stock) setCantidad(cantidad + 1);
   };
 
   const restar = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
+    if (cantidad > 1) setCantidad(cantidad - 1);
+  };
+
+  const handleAdd = () => {
+    onAdd(cantidad);
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <div style={{ marginBottom: "10px" }}>
-        <Button
-          variant="secondary"
-          onClick={restar}
-          style={{ marginRight: "10px" }}
-        >
-          -
+    <div>
+      <p>In stock: {stock}</p>
+      <p>{cantidad}</p>
+
+      <div style={{ display: "flex", gap: "20px" }}>
+        <Button variant="danger" onClick={restar}>
+          restar
         </Button>
 
-        <span style={{ fontSize: "20px", fontWeight: "bold" }}>{count}</span>
+        <Button variant="success" onClick={sumar}>
+          sumar
+        </Button>
 
-        <Button
-          variant="secondary"
-          onClick={sumar}
-          style={{ marginLeft: "10px" }}
-        >
-          +
+        <Button variant="primary" onClick={handleAdd}>
+          add to cart
         </Button>
       </div>
-
-      <Button variant="primary" onClick={() => onAdd(count)}>
-        Agregar al carrito
-      </Button>
     </div>
   );
 }

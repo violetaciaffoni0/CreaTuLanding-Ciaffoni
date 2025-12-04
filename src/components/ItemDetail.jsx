@@ -12,17 +12,21 @@ function ItemDetail({ item, onAddToCart }) {
   return (
     <div style={{ textAlign: "center", marginTop: "40px" }}>
       <img
-        src={item.imagen}
-        alt={item.nombre}
-        style={{ width: "260px", borderRadius: "12px", marginBottom: "20px" }}
+        src={item.image}
+        alt={item.name}
+        style={{
+          width: "260px",
+          borderRadius: "12px",
+          marginBottom: "20px",
+        }}
       />
 
-      <h2>{item.nombre}</h2>
-      <p>{item.descripcion}</p>
-      <h3 style={{ marginBottom: "25px" }}>${item.precio}</h3>
+      <h2>{item.name}</h2>
+      <p>{item.description}</p>
+      <h3 style={{ marginBottom: "25px" }}>${item.price}</h3>
 
       {!added ? (
-        <ItemCount item={item} onAdd={handleAdd} />
+        <ItemCount stock={10} onAdd={handleAdd} />
       ) : (
         <h4 style={{ color: "green", fontWeight: "bold" }}>
           Producto agregado al carrito ✔
