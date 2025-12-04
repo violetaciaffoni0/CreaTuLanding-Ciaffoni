@@ -1,35 +1,22 @@
-import React from "react";
-import ItemCount from "./itemCount";
+import React, { useState } from "react";
+import ItemCount from "./ItemCount";
 
-function ItemDetail({ item }) {
+function ItemDetail({ item, onAddToCart }) {
+  const [added, setAdded] = useState(false);
+
+  const handleAdd = (count) => {
+    onAddToCart(count);
+    setAdded(true);
+  };
+
   return (
-    <div
-      className="item-detail"
-      style={{
-        textAlign: "center",
-        marginTop: "20px",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "12px",
-        width: "fit-content",
-        marginInline: "auto",
-      }}
-    >
-      <img
-        src={item.imagen}
-        alt={item.nombre}
-        style={{
-          width: "250px",
-          height: "250px",
-          objectFit: "cover",
-          borderRadius: "12px",
-          marginBottom: "10px",
-        }}
-      />
+    <div className="item-detail">
+      <img src={item.imagen} alt={item.nombre} />
       <h2>{item.nombre}</h2>
       <p>{item.descripcion}</p>
       <h3>${item.precio}</h3>
-      <ItemCount item={item} />
+      {!added && <ItemCount item={item} onAdd={handleAdd} />}
+      {added && <p>Producto agregado al carrito</p>}
     </div>
   );
 }

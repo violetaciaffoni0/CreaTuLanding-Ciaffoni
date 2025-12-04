@@ -1,35 +1,34 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ItemDetail from "./itemDetail";
-import { getProductById } from "../data/products";
+import ItemDetail from "./ItemDetail";
+import { getItemById } from "../firebase/db";
 import { useCart } from "../context/useCart";
 
 function ItemDetailContainer() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
 
   useEffect(() => {
-    getProductById(id).then((res) => setItem(res));
+    setLoading(true);
+    getItemById(id)
+      .then((res) => setItem(res))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (count) => {
     if (item) {
-      addToCart({ ...item, count: 1 });
+      addToCart({ ...item, count });
       alert(`${item.nombre} agregado al carrito`);
     }
   };
 
-  return (
-    <div>
-      {item && (
-        <>
-          <ItemDetail item={item} />
-          <button onClick={handleAddToCart}>Agregar al carrito</button>
-        </>
-      )}
-    </div>
-  );
+  if (loading) return <p>Cargando producto...</p>;
+  if (!item) return <p>Producto no encontrado</p>;
+
+  return <ItemDetail item={item} onAddToCart={handleAddToCart} />;
 }
 
 export default ItemDetailContainer;
