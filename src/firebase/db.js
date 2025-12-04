@@ -1,38 +1,15 @@
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { app } from "./config.js";
 
 const db = getFirestore(app);
 
-export const getItems = async (categoriaId = null) => {
-  try {
-    const itemsRef = collection(db, "items");
-    const q = categoriaId
-      ? query(itemsRef, where("categoria", "==", categoriaId))
-      : itemsRef;
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error("Error obteniendo items:", error);
-    return [];
-  }
-};
+export const getItems = async () => {
+  const querySnapshot = await getDocs(collection(db, "items"));
+  const products = [];
 
-export const getItemById = async (id) => {
-  try {
-    const itemsRef = collection(db, "items");
-    const q = query(itemsRef, where("__name__", "==", id));
-    const snapshot = await getDocs(q);
-    if (!snapshot.empty)
-      return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
-    return null;
-  } catch (error) {
-    console.error("Error obteniendo item por ID:", error);
-    return null;
-  }
+  querySnapshot.forEach((doc) => {
+    products.push({ ...doc.data(), id: doc.id });
+  });
+
+  return products;
 };
