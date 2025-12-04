@@ -1,16 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar.jsx";
+
+import CartContainer from "./components/CartContainer.jsx";
+import Checkout from "./components/Checkout.jsx";
 import ItemListContainer from "./components/ItemListContainer.jsx";
 import ItemDetailContainer from "./components/ItemDetailContainer.jsx";
-import CartContainer from "./components/CartContainer.jsx";
-import "./App.css";
+import NavBar from "./components/NavBar.jsx";
+
 import { CartProvider } from "./context/CartContext.jsx";
+
+import "./App.css";
 
 function App() {
   return (
     <CartProvider>
       <BrowserRouter>
         <NavBar />
+
         <Routes>
           <Route
             path="/"
@@ -18,12 +23,18 @@ function App() {
               <ItemListContainer mensaje="Bienvenidos a Malvi Accesorios" />
             }
           />
+
           <Route
             path="/categoria/:categoriaId"
             element={<ItemListContainer />}
           />
+
           <Route path="/item/:id" element={<ItemDetailContainer />} />
+
           <Route path="/cart" element={<CartContainer />} />
+
+          {/* ⭐ RUTA IMPORTANTE */}
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>

@@ -22,7 +22,9 @@ export function CartProvider({ children }) {
   };
 
   const removeItem = (id) => setCart(cart.filter((prod) => prod.id !== id));
+
   const clearCart = () => setCart([]);
+
   const cartQuantity = cart.reduce((acc, prod) => acc + prod.quantity, 0);
 
   return (
