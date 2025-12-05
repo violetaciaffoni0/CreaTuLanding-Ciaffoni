@@ -20,7 +20,7 @@ Está pensado como **SPA (Single Page Application)** utilizando **React Router D
 - **React Router DOM**
 - **Firebase Firestore**
 - **Bootstrap 5 / React-Bootstrap**
-- **React Toastify**
+- **React Hot Toast**
 - **Vite**
 
 ---
@@ -45,8 +45,6 @@ src/
  ├── context/
  │    ├── CartContext.jsx
  │    └── CartProvider.jsx
- ├── data/
- │    └── products.js
  ├── firebase/
  │    ├── config.js
  │    └── db.js
@@ -61,26 +59,31 @@ src/
 
 ## 4. Instalación y ejecución
 
-1. Clonar repositorio
+1. Clonar repositorio:
 
 ```
 git clone <url-del-repo>
 ```
 
-2. Instalar dependencias
+2. Instalar dependencias:
 
 ```
 npm install
 ```
 
 3. Configurar Firebase en `src/firebase/config.js`
-4. Levantar la app en modo desarrollo
+4. Levantar la app en modo desarrollo:
 
-````
+```
 npm run dev
+```
+
+---
 
 ## 5. Firebase
+
 **config.js:**
+
 ```js
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -91,30 +94,50 @@ const firebaseConfig = {
   projectId: "TU_PROJECT_ID",
   storageBucket: "TU_STORAGE_BUCKET",
   messagingSenderId: "TU_MESSAGING_SENDER_ID",
-  appId: "TU_APP_ID"
+  appId: "TU_APP_ID",
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-````
+```
 
-**db.js (guardar orden):**
+**db.js (guardar orden y consultas):**
 
 ```js
 import { db } from "./config";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 
-export async function createOrder(buyer, items, total) {
+export const getItems = async () => {
+  const querySnapshot = await getDocs(collection(db, "items"));
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const getItemById = async (id) => {
+  const docSnap = await getDoc(doc(db, "items", id));
+  if (!docSnap.exists())
+    throw new Error("No se encontró el item con id: " + id);
+  return { id: docSnap.id, ...docSnap.data() };
+};
+
+export const getItemsByCategory = async (category) => {
+  const q = query(collection(db, "items"), where("category", "==", category));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
+export const createOrder = async (order) => {
   const ordersRef = collection(db, "orders");
-  const order = {
-    buyer,
-    items,
-    total,
-    date: Timestamp.fromDate(new Date()),
-  };
   const docRef = await addDoc(ordersRef, order);
   return docRef.id;
-}
+};
 ```
 
 ---
@@ -137,22 +160,22 @@ import { CartContext } from "./CartContext";
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  const addItem = (product, qty) => {
+  const addItem = (product, quantity) => {
     setCart((prev) => {
       const exists = prev.find((p) => p.id === product.id);
       if (exists) {
         return prev.map((p) =>
-          p.id === product.id ? { ...p, qty: p.qty + qty } : p
+          p.id === product.id ? { ...p, quantity: p.quantity + quantity } : p
         );
       }
-      return [...prev, { ...product, qty }];
+      return [...prev, { ...product, quantity }];
     });
   };
 
   const removeItem = (id) => setCart(cart.filter((p) => p.id !== id));
   const clear = () => setCart([]);
-  const totalItems = cart.reduce((acc, p) => acc + p.qty, 0);
-  const totalPrice = cart.reduce((acc, p) => acc + p.price * p.qty, 0);
+  const totalItems = cart.reduce((acc, p) => acc + p.quantity, 0);
+  const totalPrice = cart.reduce((acc, p) => acc + p.price * p.quantity, 0);
 
   return (
     <CartContext.Provider
@@ -193,22 +216,41 @@ export function CartProvider({ children }) {
 ### CartContainer.jsx
 
 - Lista productos en carrito.
-- Permite eliminar, vaciar carrito y checkout.
+- Permite eliminar, vaciar carrito y hacer checkout.
 
 ### Checkout.jsx
 
 - Formulario con nombre, email, teléfono.
-- Guarda la orden en Firebase.
-  export default products;
+- Guarda la orden en Firebase y muestra ID.
 
-```
+### EmptyCart.jsx
+
+- Muestra mensaje si carrito está vacío.
+- Link para volver al catálogo.
+
+### withLoading.jsx (HOC)
+
+- Renderiza spinner mientras los datos están cargando.
 
 ---
 
-## 9. Uso básico
-1. Seleccionar categoría.
-2. Agregar productos al carrito.
-3. Finalizar compra desde `CartContainer`.
-4. Completar checkout
+## 8. Flujo de Uso
 
-```
+1. Seleccionar categoría desde NavBar.
+2. Visualizar productos en ItemListContainer.
+3. Ver detalles de un producto en ItemDetailContainer.
+4. Agregar productos al carrito usando ItemCount.
+5. Acceder al carrito desde CartWidget.
+6. Modificar cantidades o eliminar productos en CartContainer.
+7. Finalizar compra desde Checkout.jsx y recibir ID de orden.
+
+---
+
+## 9. Notas Adicionales
+
+- SPA sin recarga de página.
+- Contexto global para manejo de carrito.
+- Renderizado condicional para loaders y mensajes.
+- Toasts para feedback al usuario.
+- Compatible con React 18+ y Bootstrap 5.
+- Firebase Firestore como backend para productos y órdenes.
