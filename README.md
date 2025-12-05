@@ -1,156 +1,214 @@
-# Mi E-commerce en React con Firebase
+# E-commerce React App - Documentación Completa
 
-Este proyecto es un **e-commerce** desarrollado con **React**, que permite a los usuarios:
+## 1. Descripción
 
-- Ver todos los productos disponibles.
-- Filtrar productos por categoría.
-- Ver el detalle de cada producto.
-- Agregar productos al carrito de compras.
-- Finalizar la compra registrando la orden en **Firebase**.
+Este proyecto es un **e-commerce** desarrollado con **React**, que permite:
 
-## Tecnologías y dependencias
+- Mostrar productos.
+- Filtrar por categoría.
+- Ver detalles de cada producto.
+- Agregar productos al carrito.
+- Finalizar compra mediante un **checkout** que guarda la orden en Firebase Firestore.
 
-| Dependencia      | Versión  | Documentación oficial                                                              |
-| ---------------- | -------- | ---------------------------------------------------------------------------------- |
-| React            | ^19.1.1  | [React](https://reactjs.org/docs/getting-started.html)                             |
-| React DOM        | ^19.1.1  | [React DOM](https://reactjs.org/docs/react-dom.html)                               |
-| React Router DOM | ^7.9.5   | [React Router DOM](https://reactrouter.com/en/main/start/overview)                 |
-| Bootstrap        | ^5.3.8   | [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)       |
-| React-Bootstrap  | ^2.10.10 | [React-Bootstrap](https://react-bootstrap.github.io/getting-started/introduction/) |
-| Firebase         | ^12.6.0  | [Firebase](https://firebase.google.com/docs/web/setup)                             |
-| React Spinners   | ^0.17.0  | [React Spinners](https://www.davidhu.io/react-spinners/)                           |
-
-## Instalación
-
-1. Clonar el repositorio:
-
-```bash
-git clone <tu-repo-url>
-```
-
-2. Instalar dependencias:
-
-```bash
-npm install
-```
-
-3. Iniciar la app en modo desarrollo:
-
-```bash
-npm start
-```
-
-La app correrá en [http://localhost:3000](http://localhost:3000).
-
-## Configuración de Firebase
-
-1. Crear un proyecto en [Firebase Console](https://console.firebase.google.com/).
-2. Habilitar Firestore Database.
-3. Crear un archivo `src/firebase/db.js`:
-
-```javascript
-// db.js
-import { initializeApp } from "firebase/app";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-
-const firebaseConfig = {
-  apiKey: "<TU_API_KEY>",
-  authDomain: "<TU_AUTH_DOMAIN>",
-  projectId: "<TU_PROJECT_ID>",
-  storageBucket: "<TU_STORAGE_BUCKET>",
-  messagingSenderId: "<TU_MESSAGING_SENDER_ID>",
-  appId: "<TU_APP_ID>",
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// Obtener productos
-export const getProducts = async () => {
-  const productsCol = collection(db, "productos");
-  const productsSnapshot = await getDocs(productsCol);
-  return productsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-};
-
-// Crear una orden
-export const createOrder = async (order) => {
-  const ordersCol = collection(db, "ordenes");
-  const docRef = await addDoc(ordersCol, { ...order, date: serverTimestamp() });
-  return docRef.id;
-};
-
-export default db;
-```
-
-## Estructura del proyecto
-
-src/
-│
-├─ components/ # Componentes reutilizables
-│ ├─ CartContainer.jsx
-│ ├─ CartWidget.jsx
-│ ├─ Checkout.jsx
-│ ├─ EmptyCart.jsx
-│ ├─ Item.jsx
-│ ├─ ItemCount.jsx
-│ ├─ ItemDetailContainer.jsx
-│ ├─ ItemDetail.jsx
-│ ├─ ItemListContainer.jsx
-│ └─ NavBar.jsx
-│
-├─ context/ # Context API para el carrito
-│ ├─ CartProvider.jsx
-│ ├─ CartContext.jsx
-│ └─ useCart.js
-│
-├─ firebase/ # Configuración y funciones de Firebase
-│ ├─ db.js
-│ └─ config.js
-│
-├─ data/ # Datos de prueba
-│ └─ products.js
-│
-├─ hoc/ # Higher Order Components
-│ └─ withLoading.jsx
-│
-└─ App.jsx
-
-## Funcionalidades
-
-### Mostrar productos
-
-- Se muestran todos los productos de la colección `productos` en Firestore.
-- Se pueden filtrar por categoría.
-
-### Detalle del producto
-
-- Al hacer click en un producto, se abre una página con información detallada.
-
-### Carrito de compras
-
-- Los usuarios pueden agregar productos al carrito.
-- Se puede ver el resumen del carrito y eliminar productos.
-- Al finalizar la compra, se crea una orden en Firestore usando `createOrder`.
-
-### Loader / Spinners
-
-- Mientras se cargan productos o datos desde Firebase, se muestra un spinner con **React Spinners**.
-
-## Uso
-
-1. Navegar por los productos.
-2. Filtrar por categoría si se desea.
-3. Hacer click en un producto para ver su detalle.
-4. Agregar productos al carrito.
-5. Ir al carrito y finalizar la compra.
+Está pensado como **SPA (Single Page Application)** utilizando **React Router DOM** y **contexto** para manejar el carrito.
 
 ---
 
-Con esta configuración, tu e-commerce está listo para interactuar con **Firebase** y registrar productos y órdenes de forma segura.
+## 2. Tecnologías
+
+- **React 18+**
+- **React Router DOM**
+- **Firebase Firestore**
+- **Bootstrap 5 / React-Bootstrap**
+- **React Toastify**
+- **Vite**
+
+---
+
+## 3. Estructura del Proyecto
+
+```
+src/
+ ├── assets/
+ ├── components/
+ │    ├── CartContainer.jsx
+ │    ├── CartWidget.jsx
+ │    ├── Checkout.jsx
+ │    ├── EmptyCart.jsx
+ │    ├── Item.jsx
+ │    ├── ItemCount.jsx
+ │    ├── ItemDetail.jsx
+ │    ├── ItemDetailContainer.jsx
+ │    ├── ItemList.jsx
+ │    ├── ItemListContainer.jsx
+ │    └── NavBar.jsx
+ ├── context/
+ │    ├── CartContext.jsx
+ │    └── CartProvider.jsx
+ ├── data/
+ │    └── products.js
+ ├── firebase/
+ │    ├── config.js
+ │    └── db.js
+ ├── hoc/
+ │    └── withLoading.jsx
+ ├── App.jsx
+ ├── main.jsx
+ └── App.css
+```
+
+---
+
+## 4. Instalación y ejecución
+
+1. Clonar repositorio
+
+```
+git clone <url-del-repo>
+```
+
+2. Instalar dependencias
+
+```
+npm install
+```
+
+3. Configurar Firebase en `src/firebase/config.js`
+4. Levantar la app en modo desarrollo
+
+````
+npm run dev
+
+## 5. Firebase
+**config.js:**
+```js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_AUTH_DOMAIN",
+  projectId: "TU_PROJECT_ID",
+  storageBucket: "TU_STORAGE_BUCKET",
+  messagingSenderId: "TU_MESSAGING_SENDER_ID",
+  appId: "TU_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+````
+
+**db.js (guardar orden):**
+
+```js
+import { db } from "./config";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+
+export async function createOrder(buyer, items, total) {
+  const ordersRef = collection(db, "orders");
+  const order = {
+    buyer,
+    items,
+    total,
+    date: Timestamp.fromDate(new Date()),
+  };
+  const docRef = await addDoc(ordersRef, order);
+  return docRef.id;
+}
+```
+
+---
+
+## 6. Contexto de Carrito
+
+**CartContext.jsx:**
+
+```js
+import { createContext } from "react";
+export const CartContext = createContext();
+```
+
+**CartProvider.jsx:**
+
+```js
+import React, { useState } from "react";
+import { CartContext } from "./CartContext";
+
+export function CartProvider({ children }) {
+  const [cart, setCart] = useState([]);
+
+  const addItem = (product, qty) => {
+    setCart((prev) => {
+      const exists = prev.find((p) => p.id === product.id);
+      if (exists) {
+        return prev.map((p) =>
+          p.id === product.id ? { ...p, qty: p.qty + qty } : p
+        );
+      }
+      return [...prev, { ...product, qty }];
+    });
+  };
+
+  const removeItem = (id) => setCart(cart.filter((p) => p.id !== id));
+  const clear = () => setCart([]);
+  const totalItems = cart.reduce((acc, p) => acc + p.qty, 0);
+  const totalPrice = cart.reduce((acc, p) => acc + p.price * p.qty, 0);
+
+  return (
+    <CartContext.Provider
+      value={{ cart, addItem, removeItem, clear, totalItems, totalPrice }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+}
+```
+
+---
+
+## 7. Componentes Principales
+
+### NavBar.jsx
+
+- Links a categorías y carrito con cantidad total.
+
+### ItemListContainer.jsx
+
+- Obtiene todos los productos o por categoría.
+- Usa `ItemList` para renderizar.
+
+### ItemDetailContainer.jsx
+
+- Obtiene producto por id y muestra `ItemDetail`.
+
+### ItemDetail.jsx
+
+- Muestra información y botón de `ItemCount` para agregar al carrito.
+
+### ItemCount.jsx
+
+- Controla cantidad a agregar al carrito.
+- Botón +, - y agregar.
+
+### CartContainer.jsx
+
+- Lista productos en carrito.
+- Permite eliminar, vaciar carrito y checkout.
+
+### Checkout.jsx
+
+- Formulario con nombre, email, teléfono.
+- Guarda la orden en Firebase.
+  export default products;
+
+```
+
+---
+
+## 9. Uso básico
+1. Seleccionar categoría.
+2. Agregar productos al carrito.
+3. Finalizar compra desde `CartContainer`.
+4. Completar checkout
+
+```
