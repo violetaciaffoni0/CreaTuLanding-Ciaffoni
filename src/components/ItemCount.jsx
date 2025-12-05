@@ -17,21 +17,21 @@ function ItemCount({ stock = 10, onAdd }) {
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center", marginTop: "15px" }}>
       <p>In stock: {stock}</p>
-      <p>{cantidad}</p>
+      <p style={{ fontWeight: "bold" }}>{cantidad}</p>
 
-      <div style={{ display: "flex", gap: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
         <Button variant="danger" onClick={restar}>
-          restar
+          -
         </Button>
 
         <Button variant="success" onClick={sumar}>
-          sumar
+          +
         </Button>
 
         <Button variant="primary" onClick={handleAdd}>
-          add to cart
+          Agregar al carrito
         </Button>
       </div>
     </div>

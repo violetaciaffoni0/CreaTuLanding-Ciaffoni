@@ -23,11 +23,9 @@ function ItemDetail({ item }) {
           marginBottom: "20px",
         }}
       />
-
       <h2>{item.name}</h2>
       <p>{item.description}</p>
       <h3 style={{ marginBottom: "25px" }}>${item.price}</h3>
-
       {!added ? (
         <ItemCount stock={10} onAdd={handleAdd} />
       ) : (

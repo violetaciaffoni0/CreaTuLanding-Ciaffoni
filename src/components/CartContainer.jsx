@@ -36,9 +36,11 @@ function CartContainer() {
                 rounded
                 style={{ objectFit: "cover" }}
               />
-              <span>
-                {prod.name} x {prod.quantity}
-              </span>
+              <div>
+                <div style={{ fontWeight: "bold" }}>{prod.name}</div>
+                <div>Precio: ${prod.price}</div>
+                <div>Cantidad: x{prod.quantity}</div>
+              </div>
             </div>
 
             <Button
