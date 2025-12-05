@@ -1,26 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CartWidget from "./CartWidget";
 
 function NavBar() {
+  const getActiveClass = ({ isActive }) => (isActive ? "active" : "");
+
   return (
     <nav className="navbar">
-      <Link to="/" className="logo">
+      <NavLink to="/" className="logo">
         <h1>Malvi-Accesorios</h1>
-      </Link>
+      </NavLink>
 
       <ul className="nav-links">
         <li>
-          <Link to="/">Inicio</Link>
+          <NavLink to="/" className={getActiveClass}>
+            Inicio
+          </NavLink>
         </li>
         <li>
-          <Link to="/categoria/Fundas">Fundas</Link>
+          <NavLink to="/categoria/Fundas" className={getActiveClass}>
+            Fundas
+          </NavLink>
         </li>
         <li>
-          <Link to="/categoria/Auriculares">Auriculares</Link>
+          <NavLink to="/categoria/Auriculares" className={getActiveClass}>
+            Auriculares
+          </NavLink>
         </li>
         <li>
-          <Link to="/categoria/Cargadores">Cargadores</Link>
+          <NavLink to="/categoria/Cargadores" className={getActiveClass}>
+            Cargadores
+          </NavLink>
         </li>
       </ul>
 

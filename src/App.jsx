@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
 import "./App.css";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -33,9 +34,9 @@ function App() {
 
           <Route path="/cart" element={<CartContainer />} />
 
-          {/* ⭐ RUTA IMPORTANTE */}
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
+        <Toaster />
       </BrowserRouter>
     </CartProvider>
   );

@@ -26,7 +26,7 @@ function ItemListContainer({ mensaje }) {
 
   return (
     <div className="container">
-      {mensaje && <h2>{mensaje}</h2>}
+      {mensaje && <h2 className="bienvenidos">{mensaje}</h2>}
       <ItemListWithLoading loading={loading} items={items} />
     </div>
   );

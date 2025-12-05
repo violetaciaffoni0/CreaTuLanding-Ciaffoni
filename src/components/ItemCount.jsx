@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
+import toast from "react-hot-toast";
 
 function ItemCount({ stock = 10, onAdd }) {
   const [cantidad, setCantidad] = useState(1);
@@ -14,6 +15,7 @@ function ItemCount({ stock = 10, onAdd }) {
 
   const handleAdd = () => {
     onAdd(cantidad);
+    toast("💖se agrego el producto al carrito💖");
   };
 
   return (

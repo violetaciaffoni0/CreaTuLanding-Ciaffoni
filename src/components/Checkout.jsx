@@ -3,11 +3,14 @@ import Form from "react-bootstrap/Form";
 import { useCart } from "../context/CartProvider.jsx";
 import { createOrder } from "../firebase/db";
 import { serverTimestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Checkout() {
-  const { cart, getTotal } = useCart();
+  const { cart, getTotal, clearCart } = useCart();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -22,7 +25,13 @@ function Checkout() {
       date: serverTimestamp(),
     };
 
-    createOrder(order);
+    const orderId = await createOrder(order);
+
+    if (orderId) {
+      toast.success(`¡El ID de tu compra es: ${orderId}`);
+      clearCart();
+      navigate("/");
+    }
   };
 
   return (
@@ -32,21 +41,21 @@ function Checkout() {
 
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" required />
+          <Form.Control type="email" placeholder="ingrese email" required />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nombre</Form.Label>
-          <Form.Control type="text" placeholder="Pepito Perez" required />
+          <Form.Control type="text" placeholder="pepito perez" required />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="phone">
           <Form.Label>Número de celular</Form.Label>
-          <Form.Control type="text" placeholder="1123434565" required />
+          <Form.Control type="text" placeholder="11443434565" required />
         </Form.Group>
 
         <Button variant="dark" type="submit" className="w-100">
-          Confirmar Checkout
+          Finalizar Compra
         </Button>
       </Form>
     </div>
